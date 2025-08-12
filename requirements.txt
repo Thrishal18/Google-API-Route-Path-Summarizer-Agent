@@ -1,0 +1,5 @@
+googlemaps
+datetime
+beautifulsoup4
+google.generativeai
+dotenv
