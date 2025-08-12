@@ -21,17 +21,20 @@ st.markdown("Get a simple, narrative summary of your driving route. This app use
 load_dotenv()
 Maps_api = os.getenv("GOOGLE_MAPS_API")
 gemini_api = os.getenv("GEMINI_API_KEY")
+password = os.getenv("password")
 
 # --- Main Interface ---
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 with col1:
-    origin = st.text_input("📍 Origin", placeholder="e.g., Times Square, New York")
+    password_input = st.text_input("Password")
 with col2:
-    dest = st.text_input("🏁 Destination", placeholder="e.g., Navy Pier, Chicago")
+    origin = st.text_input("📍 Origin")
+with col3:
+    dest = st.text_input("🏁 Destination")
 
 if st.button("Generate Route Summary", type="primary", use_container_width=True):
-    if not Maps_api or not gemini_api:
-        st.error("❌ Please provide both API keys in the sidebar to proceed.")
+    if password_input != password:
+        st.error("Please enter correct Password")
     elif not origin or not dest:
         st.warning("⚠️ Please enter both an origin and a destination.")
     else:
@@ -86,4 +89,3 @@ if st.button("Generate Route Summary", type="primary", use_container_width=True)
 
         except Exception as e:
             st.error(f"An error occurred: {e}")
-            st.info("This might be due to an invalid API key or a network issue.")
