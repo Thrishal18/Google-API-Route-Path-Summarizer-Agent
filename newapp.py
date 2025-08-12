@@ -13,7 +13,7 @@ st.set_page_config(
 )
 
 # --- App Title and Description ---
-st.title("🗺️ AI Route Summarizer")
+st.title("🗺️ Route Summarizer AI Agent")
 st.markdown("Get a simple, narrative summary of your driving route. This app uses the Google Maps API for directions and the Gemini API for a human-friendly summary.")
 
 
@@ -89,3 +89,4 @@ if st.button("Generate Route Summary", type="primary", use_container_width=True)
 
         except Exception as e:
             st.error(f"An error occurred: {e}")
+
