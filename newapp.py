@@ -5,25 +5,25 @@ import googlemaps
 import google.generativeai as genai
 import re
 
-# --- Page Configuration ---
+
 st.set_page_config(
     page_title="AI Route Summarizer",
     page_icon="🗺️",
     layout="wide"
 )
 
-# --- App Title and Description ---
+
 st.title("🗺️ AI Route Summarizer Agent")
 st.markdown("Get a simple, narrative summary of your driving route. This app uses the Google Maps API for directions and the Gemini API for a human-friendly summary.")
 
 
-# Use st.secrets for deployment, with a fallback to sidebar input for local use
+
 load_dotenv()
 Maps_api = os.getenv("GOOGLE_MAPS_API")
 gemini_api = os.getenv("GEMINI_API_KEY")
 password = os.getenv("password")
 
-# --- Main Interface ---
+
 col1, col2, col3 = st.columns(3)
 with col1:
     password_input = st.text_input("Password")
@@ -44,7 +44,7 @@ if st.button("Generate Route Summary", type="primary", use_container_width=True)
                 directions_result = gmaps.directions(origin, dest, mode="driving")
 
             if directions_result:
-                # 1. Prepare the Data for Gemini
+                
                 leg = directions_result[0]['legs'][0]
                 total_distance = leg['distance']['text']
                 total_duration = leg['duration']['text']
@@ -52,7 +52,7 @@ if st.button("Generate Route Summary", type="primary", use_container_width=True)
                 steps_list = [step['html_instructions'] for step in leg['steps']]
                 all_steps_text = " ".join([re.sub('<[^<]+?>', ' ', s) for s in steps_list])
 
-                # 2. Generate the Summary with Gemini
+                
                 with st.spinner("🤖 Asking Gemini to summarize the route..."):
                     genai.configure(api_key=gemini_api)
                     model = genai.GenerativeModel('gemini-1.5-pro-latest')
@@ -89,5 +89,6 @@ if st.button("Generate Route Summary", type="primary", use_container_width=True)
 
         except Exception as e:
             st.error(f"An error occurred: {e}")
+
 
 
